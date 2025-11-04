@@ -14,3 +14,4 @@ where = ["frappe_bigquery"]
 
 [tool.setuptools]
 include-package-data = true
+

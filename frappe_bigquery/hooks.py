@@ -14,3 +14,4 @@ scheduler_events = {
 }
 
 app_logo_url = "/assets/frappe_bigquery/icon.png"
+app_version = "0.1.0"
