@@ -5,7 +5,8 @@ def get_data():
         {
             "module_name": "BigQuery Connector",
             "label": _("BigQuery Connector"),
-            "icon": "octicon octicon-cloud-upload",
+            "icon": "fa fa-database",
+            "image": "/assets/frappe_bigquery/icon.png",  # 
             "color": "blue",
             "type": "module",
             "description": _("Export Frappe data to Google BigQuery"),
