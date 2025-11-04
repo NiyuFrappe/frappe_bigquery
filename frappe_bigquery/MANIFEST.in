@@ -1,0 +1,8 @@
+include MANIFEST.in
+include README.md
+include requirements.txt
+recursive-include frappe_bigquery *.py *.json *.md *.txt *.js *.css *.scss *.html *.xml *.svg *.png *.jpg *.jpeg *.gif
+recursive-include frappe_bigquery/public *
+recursive-include frappe_bigquery/config *
+recursive-include frappe_bigquery/*/doctype *
+global-exclude *.py[cod] __pycache__ *.so
