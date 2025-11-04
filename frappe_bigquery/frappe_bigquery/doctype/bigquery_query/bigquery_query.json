@@ -1,0 +1,116 @@
+{
+  "doctype": "DocType",
+  "name": "BigQuery Query",
+  "module": "BigQuery Connector",
+  "custom": 0,
+  "istable": 0,
+  "editable_grid": 0,
+  "track_changes": 1,
+  "allow_rename": 0,
+  "is_submittable": 0,
+  "is_single": 0,
+  "permissions": [
+    {
+      "role": "System Manager",
+      "read": 1,
+      "write": 1,
+      "create": 1,
+      "delete": 1
+    }
+  ],
+  "actions": [],
+  "links": [],
+  "states": [],
+  "field_order": [
+    "title",
+    "mode",
+    "table_name",
+    "destination_table",
+    "additional_where",
+    "custom_sql",
+    "columns",
+    "incremental_sync_enabled",
+    "interval_minutes",
+    "last_sync",
+    "last_sync_id",
+    "export_complete",
+    "is_locked"
+  ],
+  "fields": [
+    {
+      "fieldname": "title",
+      "fieldtype": "Data",
+      "label": "Export Name",
+      "reqd": 1
+    },
+    {
+      "fieldname": "mode",
+      "fieldtype": "Select",
+      "label": "Mode",
+      "options": "Table\nCustom SQL",
+      "default": "Table"
+    },
+    {
+      "fieldname": "table_name",
+      "fieldtype": "Data",
+      "label": "Table (e.g. `tabSales Order`)"
+    },
+    {
+      "fieldname": "destination_table",
+      "fieldtype": "Data",
+      "label": "Destination Table in BigQuery",
+      "reqd": 1
+    },
+    {
+      "fieldname": "additional_where",
+      "fieldtype": "Small Text",
+      "label": "Additional WHERE (no 'WHERE')"
+    },
+    {
+      "fieldname": "custom_sql",
+      "fieldtype": "Long Text",
+      "label": "Custom SQL (SELECT ...)",
+      "depends_on": "eval:doc.mode=='Custom SQL'"
+    },
+    {
+      "fieldname": "columns",
+      "fieldtype": "Table",
+      "label": "Columns",
+      "options": "BigQuery Query Column"
+    },
+    {
+      "fieldname": "incremental_sync_enabled",
+      "fieldtype": "Check",
+      "label": "Enable Incremental Sync"
+    },
+    {
+      "fieldname": "interval_minutes",
+      "fieldtype": "Int",
+      "label": "Sync Interval (minutes)",
+      "default": 15
+    },
+    {
+      "fieldname": "last_sync",
+      "fieldtype": "Datetime",
+      "label": "Last Sync",
+      "read_only": 1
+    },
+    {
+      "fieldname": "last_sync_id",
+      "fieldtype": "Int",
+      "label": "Last Synced ID",
+      "read_only": 1
+    },
+    {
+      "fieldname": "export_complete",
+      "fieldtype": "Check",
+      "label": "Export Complete",
+      "read_only": 1
+    },
+    {
+      "fieldname": "is_locked",
+      "fieldtype": "Check",
+      "label": "Cron Lock"
+    }
+  ]
+}

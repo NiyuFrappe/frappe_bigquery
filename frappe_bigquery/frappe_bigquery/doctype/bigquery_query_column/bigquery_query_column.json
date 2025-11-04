@@ -1,0 +1,36 @@
+{
+  "doctype": "DocType",
+  "name": "BigQuery Query Column",
+  "module": "BigQuery Connector",
+  "custom": 0,
+  "istable": 1,
+  "editable_grid": 1,
+  "track_changes": 1,
+  "allow_rename": 0,
+  "is_submittable": 0,
+  "is_single": 0,
+  "permissions": [
+    {
+      "role": "System Manager",
+      "read": 1,
+      "write": 1,
+      "create": 1,
+      "delete": 1
+    }
+  ],
+  "actions": [],
+  "links": [],
+  "states": [],
+  "field_order": [
+    "column_name"
+  ],
+  "fields": [
+    {
+      "fieldname": "column_name",
+      "fieldtype": "Data",
+      "label": "Column Name",
+      "reqd": 1,
+      "in_list_view": 1
+    }
+  ]
+}

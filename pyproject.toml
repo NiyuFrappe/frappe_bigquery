@@ -1,0 +1,13 @@
+[build-system]
+requires = ["setuptools", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "frappe_bigquery"
+version = "0.1.0"
+description = "Frappe → BigQuery connector"
+authors = [{name = "Niyu Labs", email = "info@niyulabs.com"}]
+readme = "README.md"
+
+[tool.setuptools.packages.find]
+where = ["frappe_bigquery"]
