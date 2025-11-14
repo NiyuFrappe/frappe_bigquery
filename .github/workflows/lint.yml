@@ -1,26 +1,25 @@
 ---
 name: Lint
 
-'on':
-  push:
-    branches: ["main"]
-  pull_request: {}
+on: [push, pull_request]
 
 jobs:
-  lint:
+  yamllint:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+      - uses: ibiqlik/action-yamllint@v3
+        with:
+          format: github
+          strict: true
+          file_or_dir: .github/workflows
 
+  flake8:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
         with:
-          python-version: "3.10"
-
-      - name: Install linters
-        run: pip install ruff yamllint
-
-      - name: Ruff (non-blocking)
-        run: ruff check . || true
-
-      - name: YAML lint (non-blocking)
-        run: yamllint -s .github || true
+          python-version: "3.11"
+      - run: pip install flake8
+      - run: flake8 frappe_bigquery --max-line-length=100
