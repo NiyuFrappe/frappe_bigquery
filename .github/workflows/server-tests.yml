@@ -1,0 +1,65 @@
+name: Server Tests
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+
+jobs:
+  tests:
+    name: Frappe v15 – Server Tests
+    runs-on: ubuntu-latest
+    timeout-minutes: 40
+
+    services:
+      mariadb:
+        image: mariadb:10.6
+        env:
+          MYSQL_ROOT_PASSWORD: root
+        ports:
+          - 3306:3306
+        options: >-
+          --health-cmd="mysqladmin ping -h 127.0.0.1 -proot"
+          --health-interval=10s
+          --health-timeout=5s
+          --health-retries=10
+      redis:
+        image: redis:7
+        ports:
+          - 6379:6379
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install bench
+        run: pip install --upgrade pip frappe-bench
+
+      - name: Init bench (Frappe v15)
+        run: |
+          bench init --skip-assets --skip-redis-config-generation --frappe-branch version-15 ci-bench
+          cd ci-bench
+          bench set-mariadb-host 127.0.0.1
+
+      - name: Add app to bench
+        run: |
+          cd ci-bench
+          bench get-app frappe_bigquery "$GITHUB_WORKSPACE"
+
+      - name: New site + install app
+        env:
+          MYSQL_ROOT_PASSWORD: root
+        run: |
+          cd ci-bench
+          bench new-site --no-mariadb-socket --mariadb-root-password "$MYSQL_ROOT_PASSWORD" --admin-password admin test.local
+          bench --site test.local install-app frappe_bigquery
+
+      - name: Run server tests
+        run: |
+          cd ci-bench
+          bench --site test.local run-tests --app frappe_bigquery
