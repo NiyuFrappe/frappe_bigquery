@@ -1,7 +1,7 @@
 {
   "doctype": "DocType",
   "name": "BigQuery Settings",
-  "module": "Frappe BigQuery"
+  "module": "Frappe BigQuery",
   "custom": 0,
   "istable": 0,
   "editable_grid": 0,
