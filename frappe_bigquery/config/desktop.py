@@ -3,8 +3,8 @@ from frappe import _
 def get_data():
     return [
         {
-            "module_name": "BigQuery Connector",
-            "label": _("BigQuery Connector"),
+            "module_name": "Frappe BigQuery",
+            "label": _("Frappe BigQuery"),
             "icon": "fa fa-database",
             "image": "/assets/frappe_bigquery/icon.png",  # 
             "color": "blue",
