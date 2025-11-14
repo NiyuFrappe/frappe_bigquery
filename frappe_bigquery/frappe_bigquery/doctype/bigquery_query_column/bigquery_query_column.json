@@ -1,7 +1,7 @@
 {
   "doctype": "DocType",
   "name": "BigQuery Query Column",
-  "module": "BigQuery Connector",
+  "module": "Frappe BigQuery"
   "custom": 0,
   "istable": 1,
   "editable_grid": 1,
