@@ -1,9 +1,10 @@
+---
 name: Server Tests
 
-on:
+'on':
   push:
-    branches: [ main ]
-  pull_request:
+    branches: ["main"]
+  pull_request: {}
 
 jobs:
   tests:
@@ -32,24 +33,24 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Setup Python
+      - name: Setup Python 3.10
         uses: actions/setup-python@v5
         with:
-          python-version: "3.11"
+          python-version: "3.10"
 
       - name: Install bench
         run: pip install --upgrade pip frappe-bench
 
       - name: Init bench (Frappe v15)
         run: |
-          bench init --skip-assets --skip-redis-config-generation --frappe-branch version-15 ci-bench
+          bench init --skip-assets --skip-redis-config-generation --frappe-branch version-15 --python "$(which python)" ci-bench
           cd ci-bench
           bench set-mariadb-host 127.0.0.1
 
-      - name: Add app to bench
+      - name: Add app to bench (resolve deps)
         run: |
           cd ci-bench
-          bench get-app frappe_bigquery "$GITHUB_WORKSPACE"
+          bench get-app --resolve-deps frappe_bigquery "file://$GITHUB_WORKSPACE"
 
       - name: New site + install app
         env:
