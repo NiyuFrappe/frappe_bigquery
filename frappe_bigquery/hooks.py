@@ -1,7 +1,7 @@
 app_name = "frappe_bigquery"
 app_title = "BigQuery Connector"
 app_publisher = "Niyu Labs"
-app_description = "Export Frappe/MariaDB data to Google BigQuery"
+app_description = "Export Sync & query Frappe data to Google BigQuery."
 app_email = "info@niyulabs.com"
 app_license = "MIT"
 
@@ -15,3 +15,4 @@ scheduler_events = {
 
 app_logo_url = "/assets/frappe_bigquery/icon.png"
 app_version = "0.1.0"
+required_apps = []
