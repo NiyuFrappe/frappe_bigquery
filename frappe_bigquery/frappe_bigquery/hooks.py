@@ -16,3 +16,7 @@ scheduler_events = {
 app_logo_url = "/assets/frappe_bigquery/icon.png"
 app_version = "0.1.0"
 required_apps = []
+after_migrate = [
+    "frappe_bigquery.patches.bigquery.ensure_bigquery_doctype"
+]
+

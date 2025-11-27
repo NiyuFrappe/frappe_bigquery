@@ -1,14 +1,14 @@
 {
   "doctype": "DocType",
   "name": "BigQuery Settings",
-  "module": "Frappe BigQuery",
+  "module": "BigQuery Connector",
   "custom": 0,
   "istable": 0,
   "editable_grid": 0,
   "track_changes": 1,
   "allow_rename": 0,
   "is_submittable": 0,
-  "is_single": 1,
+  "issingle": 1,
   "permissions": [
     {
       "role": "System Manager",

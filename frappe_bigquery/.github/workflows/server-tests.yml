@@ -1,0 +1,76 @@
+---
+name: Server Tests
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  tests:
+    runs-on: ubuntu-latest
+    timeout-minutes: 40
+
+    services:
+      mariadb:
+        image: mariadb:10.6
+        env:
+          MYSQL_ROOT_PASSWORD: root
+        ports: ["3306:3306"]
+        options: >-
+          --health-cmd="mysqladmin ping -h 127.0.0.1 -proot"
+          --health-interval=10s
+          --health-timeout=5s
+          --health-retries=5
+
+      redis:
+        image: redis:7
+        ports: ["6379:6379"]
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup Python 3.10
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.10"
+
+      - name: Install Bench
+        run: |
+          pip install --upgrade pip
+          pip install frappe-bench
+
+      - name: Init bench (Frappe v15; skip redis config)
+        run: |
+          bench init ci-bench \
+            --frappe-branch version-15 \
+            --skip-assets \
+            --skip-redis-config-generation \
+            --python "$(which python)"
+          cd ci-bench
+          bench set-mariadb-host 127.0.0.1
+
+      - name: Create site
+        working-directory: ci-bench
+        env:
+          MYSQL_ROOT_PASSWORD: root
+        run: |
+          bench new-site test.localhost \
+            --mariadb-root-password "$MYSQL_ROOT_PASSWORD" \
+            --admin-password admin \
+            --db-type mariadb \
+            --db-host 127.0.0.1 \
+            --db-port 3306 \
+            --no-mariadb-socket
+
+      - name: Add app to bench (resolve deps)
+        working-directory: ci-bench
+        run: |
+          bench get-app --branch main --resolve-deps frappe_bigquery "file://$GITHUB_WORKSPACE"
+
+      - name: Install app
+        working-directory: ci-bench
+        run: bench --site test.localhost install-app frappe_bigquery
+
+      - name: Run server tests
+        working-directory: ci-bench
+        run: bench --site test.localhost run-tests --app frappe_bigquery
